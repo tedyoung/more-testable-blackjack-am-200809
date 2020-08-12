@@ -41,6 +41,10 @@ public class Hand {
     cards.add(deck.draw());
   }
 
+  public boolean beats(Hand hand) {
+    return hand.value() < value();
+  }
+
   void displayHand() {
     System.out.println(cards
                            .stream()
@@ -51,5 +55,24 @@ public class Hand {
 
   public String displayFirstCard() {
     return cards.get(0).display();
+  }
+
+  public boolean tiesWith(Hand hand) {
+    return value() == hand.value();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Hand hand = (Hand) o;
+
+    return cards.equals(hand.cards);
+  }
+
+  @Override
+  public int hashCode() {
+    return cards.hashCode();
   }
 }
