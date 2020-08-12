@@ -70,7 +70,7 @@ public class Game {
 
   private void dealerTurn() {
     // Dealer makes its choice automatically based on a simple heuristic (<=16, hit, 17>stand)
-    while (dealerHand.handValueOf() <= 16) {
+    while (dealerHand.value() <= 16) {
       dealerHand.drawCardFrom(deck);
     }
   }
@@ -80,9 +80,9 @@ public class Game {
       System.out.println("You Busted, so you lose.  💸");
     } else if (dealerHand.isBusted()) {
       System.out.println("Dealer went BUST, Player wins! Yay for you!! 💵");
-    } else if (dealerHand.handValueOf() < playerHand.handValueOf()) {
+    } else if (dealerHand.value() < playerHand.value()) {
       System.out.println("You beat the Dealer! 💵");
-    } else if (dealerHand.handValueOf() == playerHand.handValueOf()) {
+    } else if (dealerHand.value() == playerHand.value()) {
       System.out.println("Push: The house wins, you Lose. 💸");
     } else {
       System.out.println("You lost to the Dealer. 💸");
@@ -131,7 +131,7 @@ public class Game {
     System.out.println();
     System.out.println("Player has: ");
     playerHand.displayHand();
-    System.out.println(" (" + playerHand.handValueOf() + ")");
+    System.out.println(" (" + playerHand.value() + ")");
   }
 
   private void displayBackOfCard() {
@@ -152,11 +152,11 @@ public class Game {
     System.out.print(ansi().eraseScreen().cursor(1, 1));
     System.out.println("Dealer has: ");
     dealerHand.displayHand();
-    System.out.println(" (" + dealerHand.handValueOf() + ")");
+    System.out.println(" (" + dealerHand.value() + ")");
 
     System.out.println();
     System.out.println("Player has: ");
     playerHand.displayHand();
-    System.out.println(" (" + playerHand.handValueOf() + ")");
+    System.out.println(" (" + playerHand.value() + ")");
   }
 }

@@ -16,7 +16,7 @@ public class Hand {
     this.cards.addAll(cards);
   }
 
-  public int handValueOf() {
+  public int value() {
     int handValue = cards.stream()
                          .mapToInt(Card::rankValue)
                          .sum();
@@ -26,7 +26,7 @@ public class Hand {
                           .anyMatch(card -> card.rankValue() == 1);
 
     // if the total hand value <= 11, then count the Ace as 11 by adding 10
-    if (hasAce && handValue < 11) {
+    if (hasAce && handValue <= 11) {
       handValue += 10;
     }
 
@@ -34,7 +34,7 @@ public class Hand {
   }
 
   public boolean isBusted() {
-    return handValueOf() > 21;
+    return value() > 21;
   }
 
   void drawCardFrom(Deck deck) {

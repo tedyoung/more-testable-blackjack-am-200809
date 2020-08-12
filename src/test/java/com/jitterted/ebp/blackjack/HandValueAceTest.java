@@ -2,6 +2,7 @@ package com.jitterted.ebp.blackjack;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -10,31 +11,44 @@ public class HandValueAceTest {
 
   /*
    *
-   * ADD TESTS FOR ACE BOUNDARY
+   * ADD MORE TESTS FOR ACE BOUNDARY
    *
    *
    **/
+  private static final Suit DONT_CARE_SUIT = Suit.DIAMOND;
 
 
   @Test
-  public void handWithOneAceTwoCardsIsValuedAt11() throws Exception {
-    var cards = List.of(new Card(Suit.HEART, "A"),
-                        new Card(Suit.HEART, "5"));
-    Hand hand = new Hand(cards);
+  public void hasAceWithValueCountingAcesAs1Of11ThenValuedAt21() throws Exception {
+    Hand hand = createHand("A", "A", "A", "8");
 
-    assertThat(hand.handValueOf())
-        .isEqualTo(11 + 5);
+    assertThat(hand.value())
+        .isEqualTo(21);
+  }
+
+  @Test
+  public void handWithOneAceTwoCardsIsValuedAt11TotalOf20() throws Exception {
+    Hand hand = createHand("A", "9");
+
+    assertThat(hand.value())
+        .isEqualTo(11 + 9);
   }
 
   @Test
   public void handWithOneAceAndOtherCardsEqualTo11IsValuedAt1() throws Exception {
-    var cards = List.of(new Card(Suit.HEART, "A"),
-                        new Card(Suit.HEART, "8"),
-                        new Card(Suit.HEART, "3"));
-    Hand hand = new Hand(cards);
+    Hand hand = createHand("A", "8", "3");
 
-    assertThat(hand.handValueOf())
+    assertThat(hand.value())
         .isEqualTo(1 + 8 + 3);
   }
+
+  private Hand createHand(String... ranks) {
+    List<Card> cards = new ArrayList<>();
+    for (String rank : ranks) {
+      cards.add(new Card(DONT_CARE_SUIT, rank));
+    }
+    return new Hand(cards);
+  }
+
 
 }
