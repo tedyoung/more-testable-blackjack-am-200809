@@ -45,4 +45,47 @@ public class WalletTest {
         .isEqualTo(5 + 7);
   }
 
+  @Test
+  public void bettingAnyAmountWhenWalletIsEmptyThrowsException() throws Exception {
+    Wallet wallet = new Wallet();
+
+    assertThatThrownBy(() -> {
+      wallet.bet(5);
+    })
+        .isInstanceOf(IllegalStateException.class);
+  }
+
+  @Test
+  public void walletWith7BucksBetting5BucksResultsIn2BuckBalance() throws Exception {
+    Wallet wallet = new Wallet();
+    wallet.addMoney(7);
+
+    wallet.bet(5);
+
+    assertThat(wallet.balance())
+        .isEqualTo(7 - 5);
+  }
+
+  @Test
+  public void walletWith23BucksBetting23BucksResultsInEmptyWallet() throws Exception {
+    Wallet wallet = new Wallet();
+    wallet.addMoney(23);
+
+    wallet.bet(23);
+
+    assertThat(wallet.isEmpty())
+        .isTrue();
+  }
+
+  @Test
+  public void walletWith37BucksBetting45BucksThrowsException() throws Exception {
+    Wallet wallet = new Wallet();
+    wallet.addMoney(37);
+
+    assertThatThrownBy(() -> {
+      wallet.bet(45);
+    })
+        .isInstanceOf(IllegalStateException.class);
+  }
+
 }

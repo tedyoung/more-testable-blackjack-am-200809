@@ -14,4 +14,22 @@ public class Wallet {
   public int balance() {
     return balance;
   }
+
+  public void bet(int amount) {
+    checkNotEmpty();
+    checkSufficientBalance(amount);
+    balance -= amount;
+  }
+
+  private void checkSufficientBalance(int amount) {
+    if (amount > balance) {
+      throw new IllegalStateException();
+    }
+  }
+
+  private void checkNotEmpty() {
+    if (isEmpty()) {
+      throw new IllegalStateException();
+    }
+  }
 }
