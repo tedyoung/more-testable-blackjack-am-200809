@@ -12,6 +12,8 @@ public class Game {
 
   private final Hand dealerHand = new Hand();
   private final Hand playerHand = new Hand();
+  private int playerBalance;
+  private int playerBet;
 
   public static void main(String[] args) {
     displayWelcomeMessage();
@@ -43,6 +45,7 @@ public class Game {
 
   public Game() {
     deck = new Deck();
+    playerBalance = 100;
   }
 
   public void initialDeal() {
@@ -80,8 +83,10 @@ public class Game {
       System.out.println("You Busted, so you lose.  💸");
     } else if (dealerHand.isBusted()) {
       System.out.println("Dealer went BUST, Player wins! Yay for you!! 💵");
+      playerWins();
     } else if (playerHand.beats(dealerHand)) {
       System.out.println("You beat the Dealer! 💵");
+      playerWins();
     } else if (dealerHand.tiesWith(playerHand)) {
       System.out.println("Push: The house wins, you Lose. 💸");
     } else {
@@ -158,5 +163,18 @@ public class Game {
     System.out.println("Player has: ");
     playerHand.displayHand();
     System.out.println(" (" + playerHand.value() + ")");
+  }
+
+  public int playerBalance() {
+    return playerBalance;
+  }
+
+  public void playerBets(int betAmount) {
+    playerBalance -= betAmount;
+    playerBet = betAmount;
+  }
+
+  public void playerWins() {
+    playerBalance += playerBet * 2;
   }
 }
